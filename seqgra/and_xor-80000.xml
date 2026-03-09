@@ -1,0 +1,137 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<seqgradata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://kkrismer.github.io/seqgra/data-config.xsd">
+  <general id="mc2-dna200-ab-spacing-3to5-s1-80000">
+    <name>AND_XOR</name>
+    <description>Positive requires A then B with 3–5 nt spacing; negatives are A XOR B.</description>
+    <task>multi-class classification</task>
+    <sequencespace>DNA</sequencespace>
+    <seed>1</seed>
+  </general>
+
+  <background>
+    <minlength>200</minlength>
+    <maxlength>200</maxlength>
+    <alphabetdistributions>
+      <alphabetdistribution>
+        <letter probability="0.25">A</letter>
+        <letter probability="0.25">C</letter>
+        <letter probability="0.25">G</letter>
+        <letter probability="0.25">T</letter>
+      </alphabetdistribution>
+    </alphabetdistributions>
+  </background>
+
+  <datageneration>
+    <sets>
+      <set name="training">
+        <example samples="80000"><conditionref cid="c1"/></example>
+        <example samples="80000"><conditionref cid="c2"/></example>
+      </set>
+      <set name="validation">
+        <example samples="10000"><conditionref cid="c1"/></example>
+        <example samples="10000"><conditionref cid="c2"/></example>
+      </set>
+      <set name="test">
+        <example samples="20000"><conditionref cid="c1"/></example>
+        <example samples="20000"><conditionref cid="c2"/></example>
+      </set>
+    </sets>
+  </datageneration>
+
+  <conditions>
+    <!-- Positive: A then B, 3–5 bp spacing -->
+    <condition id="c1">
+      <label>c1</label>
+      <description>Positive: A then B with spacing 3–5 bp</description>
+      <grammar>
+        <rule>
+          <position>random</position>
+          <probability>1.0</probability>
+          <sequenceelementrefs>
+            <sequenceelementref sid="seA"/>
+            <sequenceelementref sid="seB"/>
+          </sequenceelementrefs>
+          <spacingconstraints>
+            <spacingconstraint sid1="seA" sid2="seB" mindistance="3" maxdistance="5" order="in-order"/>
+          </spacingconstraints>
+        </rule>
+      </grammar>
+    </condition>
+
+    <!-- Negative: either A-only, B-only-->
+    <condition id="c2">
+      <label>c2</label>
+      <description>Negative: A-only, B-only</description>
+      <mode>mutually exclusive</mode>
+      <grammar>
+        <rule>
+          <position>random</position>
+          <probability>0.5</probability>
+          <sequenceelementrefs>
+            <sequenceelementref sid="seA"/>
+          </sequenceelementrefs>
+        </rule>
+        <rule>
+          <position>random</position>
+          <probability>0.5</probability>
+          <sequenceelementrefs>
+            <sequenceelementref sid="seB"/>
+          </sequenceelementrefs>
+        </rule>
+      </grammar>
+    </condition>
+  </conditions>
+
+  <sequenceelements>
+    <sequenceelement id="seA">
+      <kmerbased>
+        <kmer probability="1.0">TATAAA</kmer>
+      </kmerbased>
+    </sequenceelement>
+    <sequenceelement id="seB">
+      <kmerbased>
+        <kmer probability="1.0">CCAAT</kmer>
+      </kmerbased>
+    </sequenceelement>
+        <sequenceelement id="seC">
+          <matrixbased>
+            <position>
+              <letter probability="0.25">A</letter>
+              <letter probability="0.25">C</letter>
+              <letter probability="0.25">G</letter>
+              <letter probability="0.25">T</letter>
+            </position>
+            <position>
+              <letter probability="0.25">A</letter>
+              <letter probability="0.25">C</letter>
+              <letter probability="0.25">G</letter>
+              <letter probability="0.25">T</letter>
+            </position>
+            <position>
+              <letter probability="0.25">A</letter>
+              <letter probability="0.25">C</letter>
+              <letter probability="0.25">G</letter>
+              <letter probability="0.25">T</letter>
+            </position>
+            <position>
+              <letter probability="0.25">A</letter>
+              <letter probability="0.25">C</letter>
+              <letter probability="0.25">G</letter>
+              <letter probability="0.25">T</letter>
+            </position>
+            <position>
+              <letter probability="0.25">A</letter>
+              <letter probability="0.25">C</letter>
+              <letter probability="0.25">G</letter>
+              <letter probability="0.25">T</letter>
+            </position>
+            <position>
+              <letter probability="0.25">A</letter>
+              <letter probability="0.25">C</letter>
+              <letter probability="0.25">G</letter>
+              <letter probability="0.25">T</letter>
+            </position>
+          </matrixbased>
+    </sequenceelement>
+  </sequenceelements>
+</seqgradata>
